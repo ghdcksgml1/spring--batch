@@ -13,38 +13,34 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @RequiredArgsConstructor
-public class HelloJobConfiguration {
+public class JobInstanceConfiguration {
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager platformTransactionManager;
 
     @Bean
-    public Job helloJob() {
-        return new JobBuilder("helloJob", jobRepository)
-                .start(helloStep1())
-                .next(helloStep2())
+    public Job jobInstance() {
+        return new JobBuilder("jobInstance", jobRepository)
+                .start(jobInstanceStep1())
+                .next(jobInstanceStep2())
                 .build();
     }
 
     @Bean
-    public Step helloStep1() {
-        return new StepBuilder("helloStep1", jobRepository)
+    public Step jobInstanceStep1() {
+        return new StepBuilder("jobInstanceStep1", jobRepository)
                 .tasklet((contribution, chunkContext) -> {
-                    System.out.println("========================");
-                    System.out.println(">>>> Hello Spring Batch! (Step 1)");
-                    System.out.println("========================");
+                    System.out.println("jobInstanceStep1");
                     return RepeatStatus.FINISHED;
                 }, platformTransactionManager)
                 .build();
     }
 
     @Bean
-    public Step helloStep2() {
-        return new StepBuilder("helloStep2", jobRepository)
+    public Step jobInstanceStep2() {
+        return new StepBuilder("jobInstanceStep2", jobRepository)
                 .tasklet((contribution, chunkContext) -> {
-                    System.out.println("========================");
-                    System.out.println(">>>> Hello Spring Batch! (Step 2)");
-                    System.out.println("========================");
+                    System.out.println("jobInstanceStep2");
                     return RepeatStatus.FINISHED;
                 }, platformTransactionManager)
                 .build();
