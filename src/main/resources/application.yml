@@ -3,8 +3,8 @@ spring:
     active: local
   batch:
     job:
-      name: "jobInstance"
-      enabled: false
+      name: "JobExecution"
+#      enabled: false
     jdbc:
       initialize-schema: never
 ---
