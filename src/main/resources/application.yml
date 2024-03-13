@@ -3,7 +3,7 @@ spring:
     active: local
   batch:
     job:
-      name: "JobExecution"
+      name: "Job"
 #      enabled: false
     jdbc:
       initialize-schema: never
