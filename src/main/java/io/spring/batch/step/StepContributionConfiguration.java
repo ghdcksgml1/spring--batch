@@ -13,7 +13,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 //@Configuration
 //@RequiredArgsConstructor
-//public class StepExecutionConfiguration {
+//public class StepContributionConfiguration {
 //    private static final String JOB_PARAMETER = "Job";
 //
 //    private final JobRepository jobRepository;

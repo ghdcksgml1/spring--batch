@@ -6,7 +6,8 @@ spring:
       name: "Job"
 #      enabled: false
     jdbc:
-      initialize-schema: never
+      initialize-schema: always
+      isolation-level-for-create: read_committed
 ---
 spring:
   config:
