@@ -3,8 +3,8 @@ spring:
     active: local
   batch:
     job:
-      name: "Job"
-      enabled: false
+      name: ${job.name:NONE}
+#      enabled: false
     jdbc:
       initialize-schema: always
       isolation-level-for-create: read_committed

@@ -1,8 +1,9 @@
-//package io.spring.batch;
+//package io.spring.batch.job;
 //
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.batch.core.Job;
 //import org.springframework.batch.core.Step;
+//import org.springframework.batch.core.job.DefaultJobParametersValidator;
 //import org.springframework.batch.core.job.builder.JobBuilder;
 //import org.springframework.batch.core.repository.JobRepository;
 //import org.springframework.batch.core.step.builder.StepBuilder;
@@ -13,8 +14,7 @@
 //
 //@Configuration
 //@RequiredArgsConstructor
-//public class JobConfiguration {
-//
+//public class ValidatorConfiguration {
 //    private final JobRepository jobRepository;
 //    private final PlatformTransactionManager platformTransactionManager;
 //
@@ -23,6 +23,8 @@
 //        return new JobBuilder("Job", jobRepository)
 //                .start(step1())
 //                .next(step2())
+////                .validator(new CustomJobParametersValidator())
+//                .validator(new DefaultJobParametersValidator(new String[]{"name", "date"}, new String[]{"count"}))
 //                .build();
 //    }
 //

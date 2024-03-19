@@ -1,4 +1,4 @@
-//package io.spring.batch;
+//package io.spring.batch.job;
 //
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.batch.core.Job;
@@ -13,8 +13,7 @@
 //
 //@Configuration
 //@RequiredArgsConstructor
-//public class JobConfiguration {
-//
+//public class PreventRestartConfiguration {
 //    private final JobRepository jobRepository;
 //    private final PlatformTransactionManager platformTransactionManager;
 //
@@ -23,6 +22,7 @@
 //        return new JobBuilder("Job", jobRepository)
 //                .start(step1())
 //                .next(step2())
+//                .preventRestart()
 //                .build();
 //    }
 //
@@ -40,6 +40,7 @@
 //    public Step step2() {
 //        return new StepBuilder("step2", jobRepository)
 //                .tasklet((contribution, chunkContext) -> {
+////                    throw new RuntimeException("");
 //                    System.out.println("step2 was executed");
 //                    return RepeatStatus.FINISHED;
 //                }, platformTransactionManager)
