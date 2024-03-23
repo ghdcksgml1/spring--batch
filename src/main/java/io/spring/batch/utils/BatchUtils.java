@@ -1,6 +1,7 @@
 package io.spring.batch.utils;
 
 import lombok.experimental.UtilityClass;
+import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.item.ExecutionContext;
 
@@ -19,5 +20,9 @@ public class BatchUtils {
 
     public ExecutionContext extractStepExecutionContext(ChunkContext chunkContext) {
         return chunkContext.getStepContext().getStepExecution().getExecutionContext();
+    }
+
+    public JobParameters extractJobParameters(ChunkContext chunkContext) {
+        return chunkContext.getStepContext().getStepExecution().getJobParameters();
     }
 }

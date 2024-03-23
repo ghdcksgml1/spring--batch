@@ -13,14 +13,16 @@
 //
 //@Configuration
 //@RequiredArgsConstructor
-//public class TaskletConfiguration {
+//public class LimitAllowConfiguration {
+//
+//    private static final String JOB_NAME = "Job";
 //
 //    private final JobRepository jobRepository;
 //    private final PlatformTransactionManager platformTransactionManager;
 //
 //    @Bean
 //    public Job job() {
-//        return new JobBuilder("batchJob", jobRepository)
+//        return new JobBuilder(JOB_NAME, jobRepository)
 //                .start(step1())
 //                .next(step2())
 //                .build();
@@ -29,14 +31,22 @@
 //    @Bean
 //    public Step step1() {
 //        return new StepBuilder("step1", jobRepository)
-//                .tasklet(((contribution, chunkContext) -> RepeatStatus.FINISHED), platformTransactionManager)
+//                .tasklet((contribution, chunkContext) -> {
+//                    System.out.println("step1 was executed");
+//                    return RepeatStatus.FINISHED;
+//                }, platformTransactionManager)
+//                .allowStartIfComplete(true)
 //                .build();
 //    }
 //
 //    @Bean
 //    public Step step2() {
 //        return new StepBuilder("step2", jobRepository)
-//                .tasklet(new CustomTasklet(), platformTransactionManager)
+//                .tasklet((contribution, chunkContext) -> {
+//                    System.out.println("step2 was executed");
+//                    throw new RuntimeException("step2 exception!");
+//                }, platformTransactionManager)
+//                .startLimit(2)
 //                .build();
 //    }
 //}
