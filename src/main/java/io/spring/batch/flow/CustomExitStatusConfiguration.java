@@ -14,18 +14,19 @@
 //
 //@Configuration
 //@RequiredArgsConstructor
-//public class BatchStatusExitStatusConfiguration {
+//public class CustomExitStatusConfiguration {
 //
-//    private static final String JOB_NAME = "batchJob";
+//    private static final String JOB_NAME = "CustomExitStatus";
 //
 //    private final JobRepository jobRepository;
 //    private final PlatformTransactionManager platformTransactionManager;
 //
 //    @Bean
-//    public Job batchJob() {
+//    public Job job() {
 //        return new JobBuilder(JOB_NAME, jobRepository)
 //                .start(step1())
-//                .on("FAILED").to(step2())
+//                    .on("FAILED").to(step2())
+//                    .on("PASS").stop()
 //                .end()
 //                .build();
 //    }
@@ -35,7 +36,7 @@
 //        return new StepBuilder("step1", jobRepository)
 //                .tasklet((contribution, chunkContext) -> {
 //                    System.out.println(">> step1 has executed!");
-//                    contribution.setExitStatus(ExitStatus.FAILED);
+//                    contribution.getStepExecution().setExitStatus(ExitStatus.FAILED);
 //                    return RepeatStatus.FINISHED;
 //                }, platformTransactionManager)
 //                .build();
@@ -48,6 +49,7 @@
 //                    System.out.println(">> step2 has executed!");
 //                    return RepeatStatus.FINISHED;
 //                }, platformTransactionManager)
+//                .listener(new PassCheckingListener())
 //                .build();
 //    }
 //}
