@@ -3,8 +3,9 @@
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.batch.core.Job;
 //import org.springframework.batch.core.Step;
+//import org.springframework.batch.core.job.builder.FlowBuilder;
 //import org.springframework.batch.core.job.builder.JobBuilder;
-//import org.springframework.batch.core.job.flow.JobExecutionDecider;
+//import org.springframework.batch.core.job.flow.Flow;
 //import org.springframework.batch.core.repository.JobRepository;
 //import org.springframework.batch.core.step.builder.StepBuilder;
 //import org.springframework.batch.repeat.RepeatStatus;
@@ -14,9 +15,9 @@
 //
 //@Configuration
 //@RequiredArgsConstructor
-//public class JobExecutionDeciderConfiguration {
+//public class FlowJobConfiguration2 {
 //
-//    private static final String JOB_NAME = "DeciderJob";
+//    private static final String JOB_NAME = "flowJob";
 //
 //    private final JobRepository jobRepository;
 //    private final PlatformTransactionManager platformTransactionManager;
@@ -24,44 +25,45 @@
 //    @Bean
 //    public Job job() {
 //        return new JobBuilder(JOB_NAME, jobRepository)
-//                .start(step())
-//                .next(decider())
-//                .from(decider()).on("ODD").to(oddStep())
-//                .from(decider()).on("EVEN").to(evenStep())
+//                .start(flow())
+//                .next(step3())
 //                .end()
 //                .build();
 //    }
 //
 //    @Bean
-//    public JobExecutionDecider decider() {
-//        return new FlowJobDecider();
+//    public Flow flow() {
+//        return new FlowBuilder<Flow>("flow")
+//                .start(step1())
+//                .next(step2())
+//                .build();
 //    }
 //
 //    @Bean
-//    public Step step() {
-//        return new StepBuilder("startStep", jobRepository)
+//    public Step step1() {
+//        return new StepBuilder("step1", jobRepository)
 //                .tasklet((contribution, chunkContext) -> {
-//                    System.out.println("This is the start tasklet");
+//                    System.out.println(">> step1 has executed!");
 //                    return RepeatStatus.FINISHED;
 //                }, platformTransactionManager)
 //                .build();
 //    }
 //
 //    @Bean
-//    public Step evenStep() {
-//        return new StepBuilder("evenStep", jobRepository)
+//    public Step step2() {
+//        return new StepBuilder("step2", jobRepository)
 //                .tasklet((contribution, chunkContext) -> {
-//                    System.out.println(">> EvenStep has executed!");
+//                    System.out.println(">> step2 has executed!");
 //                    return RepeatStatus.FINISHED;
 //                }, platformTransactionManager)
 //                .build();
 //    }
 //
 //    @Bean
-//    public Step oddStep() {
-//        return new StepBuilder("oddStep", jobRepository)
+//    public Step step3() {
+//        return new StepBuilder("step3", jobRepository)
 //                .tasklet((contribution, chunkContext) -> {
-//                    System.out.println(">> OddStep has executed!");
+//                    System.out.println(">> step3 has executed!");
 //                    return RepeatStatus.FINISHED;
 //                }, platformTransactionManager)
 //                .build();
