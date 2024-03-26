@@ -25,45 +25,31 @@ public class JobScopeStepScopeConfiguration {
     @Bean
     public Job job() {
         return new JobBuilder("batchJob", jobRepository)
-                .start(step1(null))
+                .start(step1())
                 .next(step2())
-                .listener(new JobListener())
                 .build();
     }
 
     @Bean
-    @JobScope
-    public Step step1(@Value("#{jobParameters['message']}") String message) {
-        System.out.println("message = " + message);
+    public Step step1() {
         return new StepBuilder("step1", jobRepository)
-                .tasklet(tasklet(null), platformTransactionManager)
+                .tasklet(tasklet(), platformTransactionManager)
                 .build();
     }
 
     @Bean
     public Step step2() {
         return new StepBuilder("step2", jobRepository)
-                .tasklet(tasklet2(null), platformTransactionManager)
-                .listener(new StepListener())
+                .tasklet(tasklet(), platformTransactionManager)
                 .build();
     }
 
     @Bean
     @StepScope
-    public Tasklet tasklet(@Value("#{jobExecutionContext['name']}") String name) {
-        System.out.println("name = " + name);
+    public Tasklet tasklet() {
+        System.out.println("=== 중단점 ===");
         return (contribution, chunkContext) -> {
             System.out.println("tasklet1 has executed!");
-            return RepeatStatus.FINISHED;
-        };
-    }
-
-    @Bean
-    @StepScope
-    public Tasklet tasklet2(@Value("#{stepExecutionContext['name2']}") String name2) {
-        System.out.println("name2 = " + name2);
-        return (contribution, chunkContext) -> {
-            System.out.println("tasklet1\2 has executed!");
             return RepeatStatus.FINISHED;
         };
     }
